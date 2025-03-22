@@ -8,7 +8,7 @@ Module.register("MMM-TransitApp", {
    * Apply the default styles.
    */
   getStyles() {
-    return ["template.css"]
+    return ["transitapp.css"]
   },
 
   /**
