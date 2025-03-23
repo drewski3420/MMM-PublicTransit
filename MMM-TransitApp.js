@@ -1,7 +1,7 @@
 Module.register("MMM-TransitApp", {
 
   defaults: {
-    exampleContent: ""
+    logosize:"30px",
   },
 
   /**
@@ -31,18 +31,52 @@ Module.register("MMM-TransitApp", {
   socketNotificationReceived: function (notification, payload) {
     if (notification === "EXAMPLE_NOTIFICATION") {
       this.templateContent = `${this.config.exampleContent} ${payload.text}`
-      this.updateDom()
+      // this.updateDom()
     }
   },
 
   /**
-   * Render the page we're on.
-   */
+   * Original template   
   getDom() {
     const wrapper = document.createElement("div")
     wrapper.innerHTML = `<b>Title</b><br />${this.templateContent}`
 
     return wrapper
+  },
+  */
+
+  getDom() {
+    // Create the main container div
+    const container = document.createElement('div');
+    container.style.display = 'flex'; // Use flexbox for layout
+    container.style.alignItems = 'center'; // Vertically align items
+  
+    // Create the image element
+    const transitlogo = document.createElement('img');
+    transitlogo.src = 'modules/MMM-TransitApp/Images/transit-api-badge.png';
+    transitlogo.alt = 'Transit logo';
+    transitlogo.style.height = this.config.logosize;
+    transitlogo.style.objectFit = 'contain';
+    
+    transitlogo.style.marginRight = '20px'; // Add some spacing between image and text
+
+    const buslogo = document.createElement('img');
+    buslogo.src = 'modules/MMM-TransitApp/Images/bus-logo.png';
+    buslogo.alt = 'Bus logo';
+    buslogo.style.height = this.config.logosize;
+    buslogo.style.objectFit = 'contain';
+    
+  
+    // Create the text element
+    const textElement = document.createElement('div');
+    textElement.textContent = 'FF1';
+  
+    // Append the image and text to the container
+    container.appendChild(transitlogo);
+    container.appendChild(buslogo);
+    //container.appendChild(textElement);
+  
+    return container;
   },
 
   addRandomText() {
