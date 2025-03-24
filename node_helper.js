@@ -1,12 +1,61 @@
-const NodeHelper = require("node_helper")
+const NodeHelper = require("node_helper");
+const fetch = require("node-fetch"); // Ensure fetch is available
+const { URL } = require("url"); // Ensure URL is available
 
 module.exports = NodeHelper.create({
-
   async socketNotificationReceived(notification, payload) {
-    if (notification === "GET_RANDOM_TEXT") {
-      const amountCharacters = payload.amountCharacters || 10
-      const randomText = Array.from({ length: amountCharacters }, () => String.fromCharCode(Math.floor(Math.random() * 26) + 97)).join("")
-      this.sendSocketNotification("EXAMPLE_NOTIFICATION", { text: randomText })
+    if (notification === "FETCH_BUS_SCHEDULE") {
+      try {
+        // Build the URL with query parameters
+        const baseUrl = 'https://external.transitapp.com/v3/public/stop_departures';
+        const url = new URL(baseUrl);
+        url.searchParams.append('global_stop_id', payload.global_stop_id);
+        url.searchParams.append('remove_cancelled', 'true');
+        
+        // Make the API request
+        console.log("payload.apiKey: ", payload.apiKey);
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'apiKey': payload.apiKey,
+            'Accept-Language': 'en'
+          }
+        });
+    
+        // Check if the request was successful
+        if (!response.ok) {
+          throw new Error(`API request failed with status: ${response.status}`);
+        }
+        
+        // Sort the response in ascending order of departure_time
+        const data = await response.json();
+        const routeDepartures = data.route_departures;
+        const result = [];
+      
+        if (routeDepartures && Array.isArray(routeDepartures)) {
+          routeDepartures.forEach(route => {
+            if (route.itineraries && Array.isArray(route.itineraries)) {
+              route.itineraries.forEach(itinerary => {
+                if (itinerary.schedule_items && Array.isArray(itinerary.schedule_items)) {
+                  itinerary.schedule_items.forEach(scheduleItem => {
+                    result.push({
+                      route_short_name: route.route_short_name,
+                      departure_time: scheduleItem.departure_time,
+                    });
+                  });
+                }
+              });
+            }
+          });
+        }
+  
+        // Sort the result by departure_time
+        result.sort((a, b) => a.departure_time - b.departure_time);
+        this.sendSocketNotification("UPDATE_BUS_SCHEDULE", result);
+  
+      } catch (error) {
+        console.error('Error fetching bus times:', error);
+      }
     }
   },
-})
+});

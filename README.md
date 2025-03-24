@@ -1,9 +1,19 @@
-# MMM-Template
-Use this template for creating new MagicMirror² modules.
+# MMM-TransitApp
 
-See the [wiki page](https://github.com/Dennis-Rosenbaum/MMM-Template/wiki) for an in depth overview of how to get started.
+Before you begin,
+1. Request an API key from Transit App.
+2. Get the bus stop code using the `/public/nearby_stops` endpoint through a bash terminal.
+```
+sudo apt update
+sudo apt install curl jq
 
-# MMM-Template
+# Replace YOUR_API_KEY, YOUR_LATITUDE and YOUR_LONGITUDE
+# Set the latitude and longitude close to your bus stop.
+
+curl  -H "Accept-Language:en" -H "apiKey:YOUR_API_KEY" "https://external.transitapp.com/v3/public/nearby_stops?lat=YOUR_LATITUDE&lon=YOUR_LONGITUDE" | jq
+```
+From the JSON response, make a note of the `"global_stop_id"` of your stop. It will be formatted as `"ABC:12345"`.
+
 
 ![Example of MMM-Template](./example_1.png)
 

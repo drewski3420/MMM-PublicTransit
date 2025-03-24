@@ -13,9 +13,18 @@ active hours start
 active hours end
 Active days
 
+function get_bus_times()
+
+    response = api response
+    upcoming_buses = []
+    for Route_object in response:  # i.e., for each bus servicing the stop
+        for schedule_time in Route_object.itineraries.schedule_items:
+            upcoming_buses.append([schedule_time.departure_time, Route_object.route_short_name])
 
 
-getDom()
+
+
+function getDom()
     If during active hours
         return DOM object that shows bus times
     else
