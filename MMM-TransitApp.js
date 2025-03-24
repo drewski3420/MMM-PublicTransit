@@ -29,12 +29,10 @@ Module.register("MMM-TransitApp", {
       { route_short_name: "FF6", departure_time: Date.now()/1000 + 900 },
       { route_short_name: "FF9", departure_time: Date.now()/1000 + 1800 }
     ];
-    const payload = {
-      apiKey: this.config.apiKey,
-      global_stop_id: this.config.global_stop_id,
-    };
-    this.sendSocketNotification("FETCH_BUS_SCHEDULE", payload);
-    setInterval(() => this.sendSocketNotification("FETCH_BUS_SCHEDULE", payload), this.config.updateFrequency * 60 * 1000);
+    
+    this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours()})
+    //setInterval(() => this.sendSocketNotification("FETCH_BUS_SCHEDULE", payload), this.config.updateFrequency * 60 * 1000);
+    setInterval(() => this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours()}), this.config.updateFrequency * 60 * 1000);
     setInterval(() => this.updateDom(), 30000)
   },
 
@@ -69,6 +67,15 @@ Module.register("MMM-TransitApp", {
     // Create a div for bus times
     const busTimesContainer = document.createElement('div');
     busTimesContainer.style.flexGrow = '1'; // Allow bus times to take up remaining space
+
+    if (!this.activeHours()) {
+      const inactiveMessage = document.createElement('p');
+      inactiveMessage.textContent = "Inactive hours";
+      inactiveMessage.style.color = 'red'; // Set color to red
+      busTimesContainer.appendChild(inactiveMessage);
+      container.appendChild(busTimesContainer);
+      return container; // Return early if outside active hours
+    }
 
     // Show bus times
     let i = 0;

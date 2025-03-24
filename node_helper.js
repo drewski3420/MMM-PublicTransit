@@ -4,6 +4,12 @@ const { URL } = require("url"); // Ensure URL is available
 
 module.exports = NodeHelper.create({
   async socketNotificationReceived(notification, payload) {
+    
+    if (!payload.activeHours) {
+      console.log("Outside active hours, skipping API Calls.");
+      return; // Exit if activeHours is not defined
+    }
+
     if (notification === "FETCH_BUS_SCHEDULE") {
       try {
         // Build the URL with query parameters
