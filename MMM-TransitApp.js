@@ -5,7 +5,12 @@ Module.register("MMM-TransitApp", {
     global_stop_id: "",
     apiKey: "",
     displayed_entries: 3, // Number of bus times to display
-    fontsize: "28px", // Font size for bus times
+    fontsize: "24px", // Font size for bus times
+    logoLocation: "flex-end", // Logo alignment (flex-start, flex-end)
+    activeHoursStart: 6,  // Active hours for the module (24-hour format)
+    activeHoursEnd: 13,
+    activeDays: [1, 2, 3, 4, 5], // Active days of the week (0 = Sunday, 6 = Saturday)
+    updateFrequency: 30 // Update frequency in minutes
   },
 
   getStyles() {
@@ -19,22 +24,24 @@ Module.register("MMM-TransitApp", {
     
     // some dummy values
     this.busSchedule = [
-      { route_short_name: "FF1", departure_time: Date.now()/1000 - 60 },
-      { route_short_name: "FF2", departure_time: Date.now()/1000 + 360 },
-      { route_short_name: "FF1", departure_time: Date.now()/1000 + 900 },
+      { route_short_name: "FF6", departure_time: Date.now()/1000 - 60 },
+      { route_short_name: "FF7", departure_time: Date.now()/1000 + 360 },
+      { route_short_name: "FF6", departure_time: Date.now()/1000 + 900 },
+      { route_short_name: "FF9", departure_time: Date.now()/1000 + 1800 }
     ];
     const payload = {
       apiKey: this.config.apiKey,
       global_stop_id: this.config.global_stop_id,
     };
     this.sendSocketNotification("FETCH_BUS_SCHEDULE", payload);
-    this.API_refresh_time = Date.now();
+    setInterval(() => this.sendSocketNotification("FETCH_BUS_SCHEDULE", payload), this.config.updateFrequency * 60 * 1000);
+    setInterval(() => this.updateDom(), 30000)
   },
 
   notificationReceived(notification, payload) {
     if (notification === "UPDATE_BUS_SCHEDULE") {
       this.busSchedule = payload;
-      this.updateDom();
+      //this.updateDom();
     }
   },
 
@@ -55,8 +62,13 @@ Module.register("MMM-TransitApp", {
   getDom() {
     // Create the main container div
     const container = document.createElement('div');
-    container.style.display = 'grid'; // Use grid for layout
+    container.style.display = 'flex'; // Use flexbox for layout
+    container.style.flexDirection = 'column'; // Stack items vertically
     container.style.fontSize = this.config.fontsize; // Set font size
+
+    // Create a div for bus times
+    const busTimesContainer = document.createElement('div');
+    busTimesContainer.style.flexGrow = '1'; // Allow bus times to take up remaining space
 
     // Show bus times
     let i = 0;
@@ -91,27 +103,49 @@ Module.register("MMM-TransitApp", {
 
       busTimeContainer.appendChild(routeInfo);
 
-      container.appendChild(busTimeContainer);
+      busTimesContainer.appendChild(busTimeContainer);
       i++;
       j++;
     }
 
+    container.appendChild(busTimesContainer);
+
     // Create the image element
-    
+    const transitlogoContainer = document.createElement('div');
+    transitlogoContainer.style.display = 'flex';
+    transitlogoContainer.style.justifyContent = this.config.logoLocation; // Align to the right
+
     const transitlogo = document.createElement('img');
     transitlogo.src = 'modules/MMM-TransitApp/Images/transit-api-badge.png';
     transitlogo.alt = 'Transit logo';
     transitlogo.style.height = this.config.logosize;
     transitlogo.style.objectFit = 'contain';
 
-    container.appendChild(transitlogo);
-    
+    transitlogoContainer.appendChild(transitlogo);
+    container.appendChild(transitlogoContainer);
 
     return container;
   },
 
-  refreshSchedule() {
-    // Implement the refresh logic here
-  }
+  activeHours() {
+    // Check if the current time is within the active hours
+    const now = new Date();
+    const currentHour = now.getHours();
+    const currentDay = now.getDay();
+
+    const startHour = this.config.activeHoursStart;
+    const stopHour = this.config.activeHoursStop;
+    const activeDays = this.config.activeDays;
+
+    if (startHour === undefined || stopHour === undefined || activeDays === undefined) {
+      return true; // If active hours or days are not defined, always show the module
+    }
+
+    if (startHour <= currentHour && currentHour < stopHour && activeDays.includes(currentDay)) {
+      return true;
+    } else {
+      return false;
+    }
+  },
 
 });
