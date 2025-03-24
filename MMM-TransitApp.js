@@ -1,9 +1,11 @@
 Module.register("MMM-TransitApp", {
 
   defaults: {
-    logosize: "30px",
+    logosize: "40px",
     global_stop_id: "",
     apiKey: "",
+    displayed_entries: 3, // Number of bus times to display
+    fontsize: "28px", // Font size for bus times
   },
 
   getStyles() {
@@ -14,10 +16,12 @@ Module.register("MMM-TransitApp", {
    * Pseudo-constructor for our module. Initialize stuff here.
    */
   start() {
+    
+    // some dummy values
     this.busSchedule = [
-      { route_short_name: "FF1", departure_time: "1742802299904" },
-      { route_short_name: "FF2", departure_time: "1742802295652" },
-      { route_short_name: "FF1", departure_time: "1742802299565" },
+      { route_short_name: "FF1", departure_time: Date.now()/1000 - 60 },
+      { route_short_name: "FF2", departure_time: Date.now()/1000 + 360 },
+      { route_short_name: "FF1", departure_time: Date.now()/1000 + 900 },
     ];
     const payload = {
       apiKey: this.config.apiKey,
@@ -52,23 +56,48 @@ Module.register("MMM-TransitApp", {
     // Create the main container div
     const container = document.createElement('div');
     container.style.display = 'grid'; // Use grid for layout
+    container.style.fontSize = this.config.fontsize; // Set font size
 
     // Show bus times
-    for (let i = 0; i < Math.min(this.busSchedule.length, 3); i++) {
+    let i = 0;
+    let j = 0;
+    while (i < this.busSchedule.length && j < this.config.displayed_entries) {
+
+      if (Math.round((this.busSchedule[i].departure_time - Date.now()/1000) / 60) < 2) {
+        i++;
+        continue;
+      }
+
       const busTimeContainer = document.createElement('div');
       busTimeContainer.style.marginRight = '10px'; // Add some spacing between bus times
 
       const routeInfo = document.createElement("p");
       routeInfo.style.margin = '0';
       routeInfo.style.color = 'white'; // Set color to white
-      routeInfo.textContent = `${this.busSchedule[i].route_short_name} :     ${Math.round((this.busSchedule[i].departure_time - Date.now()/1000) / 60)} min`; // Calculate the time until departure in minutes
+      routeInfo.style.display = 'flex'; // Use flexbox to align items
+      routeInfo.style.justifyContent = 'space-between'; // Distribute space between items
+
+      const routeName = document.createElement('span');
+      routeName.style.textAlign = 'left';
+      routeName.textContent = this.busSchedule[i].route_short_name;
+
+      const departureTime = document.createElement('span');
+      departureTime.style.textAlign = 'right';
+      departureTime.style.color = 'green'; // Set color to white
+      departureTime.textContent = Math.round((this.busSchedule[i].departure_time - Date.now()/1000) / 60) + " min";
+
+      routeInfo.appendChild(routeName);
+      routeInfo.appendChild(departureTime);
+
       busTimeContainer.appendChild(routeInfo);
 
       container.appendChild(busTimeContainer);
+      i++;
+      j++;
     }
 
     // Create the image element
-    /*
+    
     const transitlogo = document.createElement('img');
     transitlogo.src = 'modules/MMM-TransitApp/Images/transit-api-badge.png';
     transitlogo.alt = 'Transit logo';
@@ -76,7 +105,7 @@ Module.register("MMM-TransitApp", {
     transitlogo.style.objectFit = 'contain';
 
     container.appendChild(transitlogo);
-    */
+    
 
     return container;
   },
