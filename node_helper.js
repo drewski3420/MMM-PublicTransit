@@ -19,7 +19,7 @@ module.exports = NodeHelper.create({
         url.searchParams.append('remove_cancelled', 'true');
         
         // Make the API request
-        console.log("payload.apiKey: ", payload.apiKey);
+        console.log("Making API call to Transit App...");
         const response = await fetch(url, {
           method: 'GET',
           headers: {

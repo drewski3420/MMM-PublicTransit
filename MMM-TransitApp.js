@@ -70,7 +70,7 @@ Module.register("MMM-TransitApp", {
 
     if (!this.activeHours()) {
       const inactiveMessage = document.createElement('p');
-      inactiveMessage.textContent = "Inactive hours";
+      inactiveMessage.textContent = "Inactive Hours";
       inactiveMessage.style.color = 'red'; // Set color to red
       busTimesContainer.appendChild(inactiveMessage);
       container.appendChild(busTimesContainer);
@@ -141,7 +141,7 @@ Module.register("MMM-TransitApp", {
     const currentDay = now.getDay();
 
     const startHour = this.config.activeHoursStart;
-    const stopHour = this.config.activeHoursStop;
+    const stopHour = this.config.activeHoursEnd;
     const activeDays = this.config.activeDays;
 
     if (startHour === undefined || stopHour === undefined || activeDays === undefined) {
