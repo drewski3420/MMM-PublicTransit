@@ -8,8 +8,8 @@ Module.register("MMM-TransitApp", {
     fontsize: "24px", // Font size for bus times
     logoLocation: "flex-end", // Logo alignment (flex-start, flex-end)
     activeHoursStart: 6,  // Active hours for the module (24-hour format)
-    activeHoursEnd: 13,
-    activeDays: [1, 2, 3, 4, 5], // Active days of the week (0 = Sunday, 6 = Saturday)
+    activeHoursEnd: 22,
+    activeDays: [0, 1, 2, 3, 4, 5, 6], // Active days of the week (0 = Sunday, 6 = Saturday)
     updateFrequency: 30 // Update frequency in minutes
   },
 
@@ -70,7 +70,7 @@ Module.register("MMM-TransitApp", {
 
     if (!this.activeHours()) {
       const inactiveMessage = document.createElement('p');
-      inactiveMessage.textContent = "Inactive Hours";
+      inactiveMessage.textContent = "Inactive";
       inactiveMessage.style.color = 'red'; // Set color to red
       busTimesContainer.appendChild(inactiveMessage);
       container.appendChild(busTimesContainer);
