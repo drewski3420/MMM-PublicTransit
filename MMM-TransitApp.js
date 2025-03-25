@@ -68,6 +68,15 @@ Module.register("MMM-TransitApp", {
     const busTimesContainer = document.createElement('div');
     busTimesContainer.style.flexGrow = '1'; // Allow bus times to take up remaining space
 
+    if (!this.config.apiKey) {
+      const inactiveMessage = document.createElement('p');
+      inactiveMessage.textContent = "Provide an API key";
+      inactiveMessage.style.color = 'red'; // Set color to red
+      busTimesContainer.appendChild(inactiveMessage);
+      container.appendChild(busTimesContainer);
+      return container; // Return early
+    }
+
     if (!this.activeHours()) {
       const inactiveMessage = document.createElement('p');
       inactiveMessage.textContent = "Inactive";
