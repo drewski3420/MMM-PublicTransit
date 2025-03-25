@@ -88,7 +88,6 @@ Module.register("MMM-TransitApp", {
       }
 
       const busTimeContainer = document.createElement('div');
-      busTimeContainer.style.marginRight = '10px'; // Add some spacing between bus times
 
       const routeInfo = document.createElement("p");
       routeInfo.style.margin = '0';
@@ -120,6 +119,7 @@ Module.register("MMM-TransitApp", {
     // Create the image element
     const transitlogoContainer = document.createElement('div');
     transitlogoContainer.style.display = 'flex';
+    transitlogoContainer.style.marginTop = '5px';
     transitlogoContainer.style.justifyContent = this.config.logoLocation; // Align to the right
 
     const transitlogo = document.createElement('img');
