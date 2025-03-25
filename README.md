@@ -20,9 +20,9 @@ API_KEY=(Your Transit App API key)
 STATION_LATITUDE=(Latitude of your bus/train stop)
 STATION_LONGITUDE=(Longitude of your bus/train stop)
 
-curl  -H "Accept-Language:en" -H "apiKey:$API_KEY$" "https://external.transitapp.com/v3/public/nearby_stops?lat=$STATION_LATITUDE$&lon=$STATION_LONGITUDE$" | jq
+curl  -H "Accept-Language:en" -H "apiKey:$API_KEY" "https://external.transitapp.com/v3/public/nearby_stops?lat=$STATION_LATITUDE&lon=$STATION_LONGITUDE" | jq
 ```
-From the JSON response, make a note of the `"global_stop_id"` of your stop. It will be formatted as `"ABC:12345"`.
+From the JSON response, make a note of the `"global_stop_id"` of your stop. It will be formatted as `"ABC:12345"`. If you would like to monitor multiple stops, please use multiple instances of this module.
 
 The free tier is limited to 1500 calls per month, or about one every 30 minutes. The display will update every 30 seconds, but the API calls are cached. To do more frequent API calls during your commute hours for better real-time info, consider setting the `activeHours` configuration value to disable refreshing when you do not need real-time transit times.
 
