@@ -75,3 +75,22 @@ To use this module, add it to the modules array in the `config/config.js` file:
         }
     },
 ```
+
+## Known Issues
+
+The Transit API has a limitation where it only returns a maximum of 3 future departures for any given route. For example, if the actual departures are:
+
+1.  9:30 AM - Bus A
+2.  9:35 AM - Bus A
+3.  9:40 AM - Bus A
+4.  9:45 AM - Bus A
+5.  9:50 AM - Bus B
+
+The API will return:
+
+1.  9:30 AM - Bus A
+2.  9:35 AM - Bus A
+3.  9:40 AM - Bus A
+4.  9:50 AM - Bus B
+
+This behavior is a limitation of the Transit API and is unlikely to be fixed. The issue is partially mitigated by more frequent API calls.
