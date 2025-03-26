@@ -36,8 +36,8 @@ The free tier is limited to 1500 calls per month, or about one every 30 minutes.
 | `displayed_entries`| Number of bus times to display.                                             | `3`         |
 | `fontsize`         | Font size for bus times.                                                    | `"24px"`    |
 | `logoLocation`     | Logo alignment (`flex-start`, `flex-end`).                                  | `"flex-end"`|
-| `activeHoursStart` | Active hours for the module (24-hour format).                               | `6`         |
-| `activeHoursEnd`   | Active hours end for the module (24-hour format).                           | `22`        |
+| `activeHoursStart` | Active hours start time (24-hour format).                                   | `6`         |
+| `activeHoursEnd`   | Active hours end time (24-hour format).                                     | `22`        |
 | `activeDays`       | Active days of the week (0 = Sunday, 6 = Saturday).                         | `[0, 1, 2, 3, 4, 5, 6]`|
 | `updateFrequency`  | Update frequency in minutes.                                                | `30`        |
 
