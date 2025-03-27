@@ -1,4 +1,4 @@
-Module.register("MMM-TransitApp", {
+Module.register("MMM-PublicTransit", {
 
   defaults: {
     logosize: "40px",
@@ -14,7 +14,7 @@ Module.register("MMM-TransitApp", {
   },
 
   getStyles() {
-    return ["transitapp.css"];
+    return ["publictransit.css"];
   },
 
   /**
@@ -132,7 +132,7 @@ Module.register("MMM-TransitApp", {
     transitlogoContainer.style.justifyContent = this.config.logoLocation; // Align to the right
 
     const transitlogo = document.createElement('img');
-    transitlogo.src = 'modules/MMM-TransitApp/Images/transit-api-badge.png';
+    transitlogo.src = 'modules/MMM-PublicTransit/Images/transit-api-badge.png';
     transitlogo.alt = 'Transit logo';
     transitlogo.style.height = this.config.logosize;
     transitlogo.style.objectFit = 'contain';

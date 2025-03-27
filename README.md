@@ -1,8 +1,8 @@
-# MMM-TransitApp
+# MMM-PublicTransit
 
 This [MagicMirror](https://magicmirror.builders/) module displays upcoming bus or train times from any transit stop across [150+ transit agencies in 25 countries](https://transitapp.com/en/region).  See if your stop is served by [Transit](https://transitapp.com/) using their app before investing time in this module!
 
-![Example of MMM-TransitApp](Images/sample.png)
+![Example of MMM-PublicTransit](Images/sample.png)
 
 ## Pre-requisites
 
@@ -50,13 +50,13 @@ In your terminal, go to your MagicMirror² Module folder and clone MMM-Template:
 
 ```bash
 cd ~/MagicMirror/modules
-git clone https://github.com/thariq-shanavas/MMM-TransitApp
+git clone https://github.com/thariq-shanavas/MMM-PublicTransit
 ```
 
 ### Update
 
 ```bash
-cd ~/MagicMirror/modules/MMM-TransitApp
+cd ~/MagicMirror/modules/MMM-PublicTransit
 git pull
 ```
 
@@ -66,7 +66,7 @@ To use this module, add it to the modules array in the `config/config.js` file:
 
 ```js
     {
-        module: 'MMM-TransitApp',
+        module: 'MMM-PublicTransit',
         position: 'lower_third',
         header: 'Your Stop Name',
         config: {
