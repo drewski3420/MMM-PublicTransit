@@ -26,6 +26,16 @@ From the JSON response, make a note of the `"global_stop_id"` of your stop. It w
 
 The free tier is limited to 1500 calls per month, or about one every 30 minutes. The display will update every 30 seconds, but the API calls are cached. To do more frequent API calls during your commute hours for better real-time info, consider setting the `activeHours` configuration value to disable refreshing when you do not need real-time transit times.
 
+
+### Install
+
+In your terminal, go to your MagicMirror² Module folder and clone MMM-Template:
+
+```bash
+cd ~/MagicMirror/modules
+git clone https://github.com/thariq-shanavas/MMM-PublicTransit
+```
+
 ## Configuration Options
 
 | Option             | Description                                                                 | Default     |
@@ -41,17 +51,6 @@ The free tier is limited to 1500 calls per month, or about one every 30 minutes.
 | `activeDays`       | Active days of the week (0 = Sunday, 6 = Saturday).                         | `[0, 1, 2, 3, 4, 5, 6]`|
 | `updateFrequency`  | Update frequency in minutes.                                                | `30`        |
 
-
-
-
-### Install
-
-In your terminal, go to your MagicMirror² Module folder and clone MMM-Template:
-
-```bash
-cd ~/MagicMirror/modules
-git clone https://github.com/thariq-shanavas/MMM-PublicTransit
-```
 
 ### Update
 
