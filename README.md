@@ -2,6 +2,8 @@
 
 This [MagicMirror](https://magicmirror.builders/) module displays upcoming bus or train times from any transit stop across [150+ transit agencies in 25 countries](https://transitapp.com/en/region).  See if your stop is served by [Transit](https://transitapp.com/) using their app before investing time in this module!
 
+If your transit agency publishes their schedule in GTFS format, [MMM-transitfeed](https://github.com/bnitkin/MMM-transitfeed) will work for you and does not need an API key. 
+
 ![Example of MMM-PublicTransit](Images/sample.png)
 
 ## Pre-requisites
