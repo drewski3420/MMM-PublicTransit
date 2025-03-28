@@ -6,7 +6,7 @@ module.exports = NodeHelper.create({
   async socketNotificationReceived(notification, payload) {
     
     if (!payload.activeHours) {
-      console.log("Outside active hours, skipping API Calls.");
+      //console.log("Outside active hours, skipping API Calls.");
       return; // Exit if activeHours is not defined
     }
 
@@ -19,7 +19,7 @@ module.exports = NodeHelper.create({
         url.searchParams.append('remove_cancelled', 'true');
         
         // Make the API request
-        console.log("Making API call to Transit App...");
+        //console.log("Making API call to Transit App...");
         const response = await fetch(url, {
           method: 'GET',
           headers: {

@@ -28,6 +28,7 @@ From the JSON response, make a note of the `"global_stop_id"` of your stop. It w
 
 The free tier is limited to 1500 calls per month, or about one every 30 minutes. The display will update every 30 seconds, but the API calls are cached. To do more frequent API calls during your commute hours for better real-time info, consider setting the `activeHours` configuration value to disable refreshing when you do not need real-time transit times.
 
+The terms and conditions of the Transit App API requires that the Transit Logo be shown next to the feed. Transit App provides a valuable service at no cost and I feel it is a very fair ask. However, this code is MIT licensed and 'free' as in freedom, so if you feel very strongly about the logo you may hide it from the configuration file.
 
 ### Install
 
@@ -44,7 +45,8 @@ git clone https://github.com/thariq-shanavas/MMM-PublicTransit
 | ------------------ | --------------------------------------------------------------------------- | ----------- |
 | `global_stop_id` (required)  | The global stop ID from the Transit App API.                               | `""`        |
 | `apiKey` (required)           | Your Transit App API key.                                                   | `""`        |
-| `logosize`         | Size of the transit logo.                                                   | `"40px"`    |
+| `logosize`         | Size of the Transit logo.                                                   | `"40px"`    |
+| `showlogo`         | Show or hide the transit logo (true, false)                                                   | true   |
 | `displayed_entries`| Number of bus times to display.                                             | `3`         |
 | `fontsize`         | Font size for bus times.                                                    | `"24px"`    |
 | `logoLocation`     | Logo alignment (`flex-start`, `flex-end`).                                  | `"flex-end"`|

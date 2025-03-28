@@ -2,6 +2,7 @@ Module.register("MMM-PublicTransit", {
 
   defaults: {
     logosize: "40px",
+    showlogo: true,
     global_stop_id: "",
     apiKey: "",
     displayed_entries: 3, // Number of bus times to display
@@ -125,6 +126,7 @@ Module.register("MMM-PublicTransit", {
     container.appendChild(busTimesContainer);
 
     // Create the image element
+    if (this.config.showlogo) {
     const transitlogoContainer = document.createElement('div');
     transitlogoContainer.style.display = 'flex';
     transitlogoContainer.style.marginTop = '5px';
@@ -138,6 +140,7 @@ Module.register("MMM-PublicTransit", {
 
     transitlogoContainer.appendChild(transitlogo);
     container.appendChild(transitlogoContainer);
+    }
 
     return container;
   },
