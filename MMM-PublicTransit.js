@@ -24,10 +24,9 @@ Module.register("MMM-PublicTransit", {
     
     // some dummy values
     this.busSchedule = [
-      { route_short_name: "FF6", departure_time: Date.now()/1000 - 60 },
-      { route_short_name: "FF7", departure_time: Date.now()/1000 + 360 },
-      { route_short_name: "FF6", departure_time: Date.now()/1000 + 900 },
-      { route_short_name: "FF9", departure_time: Date.now()/1000 + 1800 }
+      { route_short_name: "UhOh", departure_time: Date.now()/1000 - 60 },
+      { route_short_name: "API", departure_time: Date.now()/1000 + 360 },
+      { route_short_name: "Error", departure_time: Date.now()/1000 + 600 }
     ];
     
     this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours()})
