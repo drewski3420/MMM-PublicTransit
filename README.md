@@ -46,7 +46,7 @@ git clone https://github.com/thariq-shanavas/MMM-PublicTransit
 | `global_stop_id` (required)  | The global stop ID from the Transit App API.                               | `""`        |
 | `apiKey` (required)           | Your Transit App API key.                                                   | `""`        |
 | `logosize`         | Size of the Transit logo.                                                   | `"40px"`    |
-| `showlogo`         | Show or hide the transit logo (true, false)                                                   | true   |
+| `showlogo`         | Show or hide the transit logo (`true`, `false`)                                                   | `true`   |
 | `displayed_entries`| Number of bus times to display.                                             | `3`         |
 | `fontsize`         | Font size for bus times.                                                    | `"24px"`    |
 | `logoLocation`     | Logo alignment (`flex-start`, `flex-end`).                                  | `"flex-end"`|
