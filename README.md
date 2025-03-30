@@ -76,7 +76,7 @@ To use this module, add it to the modules array in the `config/config.js` file:
         position: 'lower_third',
         header: 'Your Stop Name',
         config: {
-            global_stop_id: 'abc:1234'
+            global_stop_id: 'abc:1234',
             apiKey: ''
         }
     },
