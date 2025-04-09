@@ -2,9 +2,21 @@
 
 This [MagicMirror](https://magicmirror.builders/) module displays upcoming bus or train times from any transit stop across [150+ transit agencies in 25 countries](https://transitapp.com/en/region).  See if your stop is served by [Transit](https://transitapp.com/) using their app before investing time in this module!
 
-If your transit agency publishes their schedule in GTFS format, [MMM-transitfeed](https://github.com/bnitkin/MMM-transitfeed) will work for you and does not need an API key. 
-
 ![Example of MMM-PublicTransit](Images/sample.png)
+
+
+## Use Case
+
+Use this module to see upcoming departures from a bus or train stop of interest.
+
+Some transit agencies provide a standardized GTFS feed for real-time transit updates. But many supply their own API, or sometimes no programmatic way to access their transit times at all. Transit App partners with local transit agencies and combines it with crowdsourced data, to provide a standard, high-quality feed for public transit in most of North and South America and much of Europe. 
+
+## Alternatives
+1. If your transit agency publishes their schedule in GTFS format, [MMM-transitfeed](https://github.com/bnitkin/MMM-transitfeed) will work for you and does not need an API key. On the plus side, you can refresh departure times as frequently as you desire. The downside may be that the configuration is somewhat more complex and specific to your local public transit agency.
+
+2. There are a few modules that use the Google Maps API: e.g., [MMM-GoogleBusSchedule](https://github.com/studio-1b/MMM-GoogleBusSchedule) and [MMM-LocalTransport](https://github.com/CFenner/MMM-LocalTransport). Unfortunately, as the Google Directions API is being deprecated, some of these may not work as intended unless the modules are re-written to use the Routes API. I have not tested which one of these still work. You will need a credit card for Google Cloud Platform, even if you limit yourself to the free tier.
+
+If you found this module useful, please consider leaving a star on GitHub so others may find it. Thank you!
 
 ## Pre-requisites
 
