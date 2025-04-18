@@ -11,7 +11,6 @@ Use this module to see upcoming departures from a bus or train stop of interest.
 
 Some transit agencies provide a standardized GTFS feed for real-time transit updates. But many supply their own API, or sometimes no programmatic way to access their transit times at all. Transit App partners with local transit agencies and combines it with crowdsourced data, to provide a standard, high-quality feed for public transit in most of North and South America and much of Europe. 
 
-The free tier is limited to 1500 calls per month, or about one every 30 minutes. The display will update every 30 seconds, but the API calls are cached so you may see outdated information. Please read on to find how you can disable API calls outside your commute hours to get more frequent updates when you need it.
 
 ## Alternatives
 1. If your transit agency publishes their schedule in GTFS format, [MMM-transitfeed](https://github.com/bnitkin/MMM-transitfeed) will work for you and does not need an API key. On the plus side, you can refresh departure times as frequently as you desire. The downside may be that the configuration is somewhat more complex and specific to your local public transit agency.
@@ -43,7 +42,7 @@ If you don't see any results from the API response, the location you provided is
 
 From the JSON response, make a note of the `"global_stop_id"` of your stop. It will be formatted as `"ABC:12345"`. If you would like to monitor multiple stops, please use multiple instances of this module.
 
-To do more frequent API calls during your commute hours for better real-time info, consider setting the `activeHours` configuration value to disable refreshing when you do not need real-time transit times.
+The free tier is limited to 1500 calls per month, or about one every 30 minutes. The display will update every 30 seconds, but the API calls are cached so you may see outdated information. To do more frequent API calls during your commute hours for better real-time info, consider setting the `activeHours` configuration value to disable refreshing when you do not need real-time transit times.
 
 The terms and conditions of the Transit App API requires that the Transit Logo be shown next to the feed. Transit App provides a valuable service at no cost and I feel it is a very fair ask. However, this code is MIT licensed and 'free' as in freedom, so if you feel very strongly about the logo you may hide it from the configuration file.
 
