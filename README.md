@@ -42,9 +42,6 @@ If you don't see any results from the API response, the location you provided is
 
 From the JSON response, make a note of the `"global_stop_id"` of your stop. It will be formatted as `"ABC:12345"`. If you would like to monitor multiple stops, please use multiple instances of this module.
 
-The free tier is limited to 1500 calls per month, or about one every 30 minutes. The display will update every 30 seconds, but the API calls are cached so you may see outdated information. To do more frequent API calls during your commute hours for better real-time info, consider setting the `activeHours` configuration value to disable refreshing when you do not need real-time transit times.
-
-The terms and conditions of the Transit App API requires that the Transit Logo be shown next to the feed. Transit App provides a valuable service at no cost and I feel it is a very fair ask. However, this code is MIT licensed and 'free' as in freedom, so if you feel very strongly about the logo you may hide it from the configuration file.
 
 ### Install
 
@@ -54,6 +51,26 @@ In your terminal, go to your MagicMirror² Module folder and clone MMM-Template:
 cd ~/MagicMirror/modules
 git clone https://github.com/thariq-shanavas/MMM-PublicTransit
 ```
+
+## Using the module
+
+To use this module, add it to the modules array in the `config/config.js` file:
+
+```js
+    {
+        module: 'MMM-PublicTransit',
+        position: 'top_right',
+        header: 'Your Stop Name',
+        config: {
+            global_stop_id: 'abc:1234',
+            apiKey: ''
+        }
+    },
+```
+
+The free tier is limited to 1500 calls per month, or about one every 30 minutes. The display will update every 30 seconds, but the API calls are cached so you may see outdated information. To do more frequent API calls during your commute hours for better real-time info, consider setting the `activeHours` configuration value to disable refreshing when you do not need real-time transit times.
+
+The terms and conditions of the Transit App API requires that the Transit Logo be shown next to the feed. Transit App provides a valuable service at no cost and I feel it is a very fair ask. However, this code is MIT licensed and 'free' as in freedom, so if you feel very strongly about the logo you may hide it from the configuration file.
 
 ## Configuration Options
 
@@ -77,22 +94,6 @@ git clone https://github.com/thariq-shanavas/MMM-PublicTransit
 ```bash
 cd ~/MagicMirror/modules/MMM-PublicTransit
 git pull
-```
-
-## Using the module
-
-To use this module, add it to the modules array in the `config/config.js` file:
-
-```js
-    {
-        module: 'MMM-PublicTransit',
-        position: 'top_right',
-        header: 'Your Stop Name',
-        config: {
-            global_stop_id: 'abc:1234',
-            apiKey: ''
-        }
-    },
 ```
 
 ## Known Issues
