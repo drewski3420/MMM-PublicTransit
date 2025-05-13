@@ -97,6 +97,16 @@ cd ~/MagicMirror/modules/MMM-PublicTransit
 git pull
 ```
 
+## Debugging
+
+If the module does not work as expected, please create a [github issue](https://github.com/thariq-shanavas/MMM-PublicTransit/issues/new/choose) and share the output of the following commands:
+
+```bash
+pm2 stop MagicMirror
+cd ~/MagicMirror
+npm start
+```
+
 ## Known Issues
 
 The Transit API has a limitation where it only returns a maximum of 3 future departures for any given route. For example, if the actual departures are:
