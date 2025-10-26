@@ -11,7 +11,8 @@ Module.register("MMM-PublicTransit", {
     activeHoursStart: 6,  // Active hours for the module (24-hour format)
     activeHoursEnd: 22,
     activeDays: [0, 1, 2, 3, 4, 5, 6], // Active days of the week (0 = Sunday, 6 = Saturday)
-    updateFrequency: 30 // Update frequency in minutes
+    updateFrequency: 30, // Update frequency in minutes
+    delayMinutes: 0,
   },
 
   getStyles() {
@@ -29,10 +30,10 @@ Module.register("MMM-PublicTransit", {
       { route_short_name: "API", departure_time: Date.now()/1000 + 360 },
       { route_short_name: "Error", departure_time: Date.now()/1000 + 600 }
     ];
-    
-    this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours()})
+    let timeToStart = Math.floor(Date.now()/1000 + this.config.delayMinutes*60);
+    this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours(),time:timeToStart})
     //setInterval(() => this.sendSocketNotification("FETCH_BUS_SCHEDULE", payload), this.config.updateFrequency * 60 * 1000);
-    setInterval(() => this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours()}), this.config.updateFrequency * 60 * 1000);
+    setInterval(() => this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours(), time:timeToStart}), this.config.updateFrequency * 60 * 1000);
     setInterval(() => this.updateDom(), 30000)
   },
 
@@ -85,6 +86,24 @@ Module.register("MMM-PublicTransit", {
     }
 
     // Show bus times
+    // Create the headers
+    const busTimesHeader = document.createElement('div');
+    busTimesHeader.classList.add('header_info');
+
+    const routeHeader = document.createElement('span');
+    routeHeader.classList.add("route_header");
+    routeHeader.textContent = "Route";
+
+    const departureHeader = document.createElement('span');
+    departureHeader.classList.add("departure_header");
+    departureHeader.textContent = "Leave in";
+
+    busTimesHeader.appendChild(routeHeader);
+    busTimesHeader.appendChild(departureHeader);
+
+    busTimesContainer.appendChild(busTimesHeader);
+
+
     let i = 0;
     let j = 0;
     while (i < this.busSchedule.length && j < this.config.displayed_entries) {
@@ -105,7 +124,7 @@ Module.register("MMM-PublicTransit", {
 
       const departureTime = document.createElement('span');
       departureTime.classList.add("departure_time");
-      departureTime.textContent = Math.round((this.busSchedule[i].departure_time - Date.now()/1000) / 60) + " min";
+      departureTime.textContent = (Math.round((this.busSchedule[i].departure_time - Date.now()/1000) / 60) - this.config.delayMinutes) + " min";
 
       routeInfo.appendChild(routeName);
       routeInfo.appendChild(departureTime);
@@ -113,6 +132,7 @@ Module.register("MMM-PublicTransit", {
       busTimeContainer.appendChild(routeInfo);
 
       busTimesContainer.appendChild(busTimeContainer);
+
       i++;
       j++;
     }

@@ -19,6 +19,13 @@
   justify-content: space-between;
 }
 
+.MMM-PublicTransit .header_info {
+  margin: 0;
+  color: yellow; 
+  display: flex;
+  justify-content: space-between;
+}
+
 .MMM-PublicTransit .route_name {
   text-align: left;
 }
