@@ -60,18 +60,15 @@ Module.register("MMM-PublicTransit", {
   getDom() {
     // Create the main container div
     const container = document.createElement('div');
-    container.style.display = 'flex'; // Use flexbox for layout
-    container.style.flexDirection = 'column'; // Stack items vertically
-    container.style.fontSize = this.config.fontsize; // Set font size
+    container.classList.add('container');
 
     // Create a div for bus times
     const busTimesContainer = document.createElement('div');
-    busTimesContainer.style.flexGrow = '1'; // Allow bus times to take up remaining space
+    busTimesContainer.classList.add('bustimes_container');
 
     if (!this.config.apiKey) {
       const inactiveMessage = document.createElement('p');
       inactiveMessage.textContent = "Provide an API key";
-      //inactiveMessage.style.color = 'red'; // Set color to red
       inactiveMessage.classList.add("inactive");
       busTimesContainer.appendChild(inactiveMessage);
       container.appendChild(busTimesContainer);
@@ -81,7 +78,6 @@ Module.register("MMM-PublicTransit", {
     if (!this.activeHours()) {
       const inactiveMessage = document.createElement('p');
       inactiveMessage.textContent = "Inactive";
-      //inactiveMessage.style.color = 'red'; // Set color to red
       inactiveMessage.classList.add("inactive");
       busTimesContainer.appendChild(inactiveMessage);
       container.appendChild(busTimesContainer);
@@ -101,18 +97,14 @@ Module.register("MMM-PublicTransit", {
       const busTimeContainer = document.createElement('div');
 
       const routeInfo = document.createElement("p");
-      routeInfo.style.margin = '0';
-      routeInfo.style.color = 'white'; // Set color to white
-      routeInfo.style.display = 'flex'; // Use flexbox to align items
-      routeInfo.style.justifyContent = 'space-between'; // Distribute space between items
+      routeInfo.classList.add("route_info");
 
       const routeName = document.createElement('span');
-      routeName.style.textAlign = 'left';
+      routeName.classList.add("route_name");
       routeName.textContent = this.busSchedule[i].route_short_name;
 
       const departureTime = document.createElement('span');
-      departureTime.style.textAlign = 'right';
-      departureTime.style.color = 'green'; // Set color to white
+      departureTime.classList.add("departure_time");
       departureTime.textContent = Math.round((this.busSchedule[i].departure_time - Date.now()/1000) / 60) + " min";
 
       routeInfo.appendChild(routeName);
@@ -130,15 +122,11 @@ Module.register("MMM-PublicTransit", {
     // Create the image element
     if (this.config.showlogo) {
     const transitlogoContainer = document.createElement('div');
-    transitlogoContainer.style.display = 'flex';
-    transitlogoContainer.style.marginTop = '5px';
-    transitlogoContainer.style.justifyContent = this.config.logoLocation; // Align to the right
+    transitlogoContainer.classList.add("transit_logo");
 
     const transitlogo = document.createElement('img');
     transitlogo.src = 'modules/MMM-PublicTransit/Images/transit-api-badge.png';
     transitlogo.alt = 'Transit logo';
-    transitlogo.style.height = this.config.logosize;
-    transitlogo.style.objectFit = 'contain';
 
     transitlogoContainer.appendChild(transitlogo);
     container.appendChild(transitlogoContainer);
