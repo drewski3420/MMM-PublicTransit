@@ -71,7 +71,8 @@ Module.register("MMM-PublicTransit", {
     if (!this.config.apiKey) {
       const inactiveMessage = document.createElement('p');
       inactiveMessage.textContent = "Provide an API key";
-      inactiveMessage.style.color = 'red'; // Set color to red
+      //inactiveMessage.style.color = 'red'; // Set color to red
+      inactiveMessage.classList.add("inactive");
       busTimesContainer.appendChild(inactiveMessage);
       container.appendChild(busTimesContainer);
       return container; // Return early
@@ -80,7 +81,8 @@ Module.register("MMM-PublicTransit", {
     if (!this.activeHours()) {
       const inactiveMessage = document.createElement('p');
       inactiveMessage.textContent = "Inactive";
-      inactiveMessage.style.color = 'red'; // Set color to red
+      //inactiveMessage.style.color = 'red'; // Set color to red
+      inactiveMessage.classList.add("inactive");
       busTimesContainer.appendChild(inactiveMessage);
       container.appendChild(busTimesContainer);
       return container; // Return early if outside active hours
