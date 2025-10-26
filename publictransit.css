@@ -1,13 +1,11 @@
-.MMM-PublicTransit div {
-    color: rgb(26, 59, 247);
-}
 .MMM-PublicTransit .container {
+  color: rgb(26, 59, 247);
   display: flex;
-  flexDirectio: column;
-  fontSize: 12;
+  flex-direction: column;
+  font-size: 12;
 }
 .MMM-PublicTransit .bustimes_container  {
-  flexGrow: 1;
+  flex-grow: 1;
 }
 
 .MMM-PublicTransit .inactive {
@@ -18,22 +16,22 @@
   margin: 0;
   color: white; 
   display: flex;
-  justifyContent: space-between;
+  justify-content: space-between;
 }
 
 .MMM-PublicTransit .route_name {
-  textAlign: left;
+  text-align: left;
 }
 
 .MMM-PublicTransit .departure_time {
-  textAlign: right;
+  text-align: right;
   color: green;
 }
 
 .MMM-PublicTransit .transit_logo {
   display: flex;
-  marginTop: 5px;
-  justifyContent: this.config.logoLocation;
-  height: this.config.logosize;
-  objectFit: contain;
+  margin-top: 5px;
+  justify-content: flex-end;
+  height: 40px;
+  object-fit: contain;
 }
