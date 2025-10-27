@@ -18,8 +18,8 @@ module.exports = NodeHelper.create({
         const url = new URL(baseUrl);
         url.searchParams.append('global_stop_id', payload.global_stop_id);
         url.searchParams.append('remove_cancelled', 'true');
-        url.searchParams.append('time', payload.time);
-        url.searchParams.append('max_num_departures',payload.max_num_departures);
+        url.searchParams.append('time', payload.startTime);
+        url.searchParams.append('max_num_departures',payload.numDepartures);
 
         // Make the API request
         //console.log("Making API call to Transit App...");

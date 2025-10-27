@@ -13,6 +13,7 @@ Module.register("MMM-PublicTransit", {
     activeDays: [0, 1, 2, 3, 4, 5, 6], // Active days of the week (0 = Sunday, 6 = Saturday)
     updateFrequency: 30, // Update frequency in minutes
     delayMinutes: 0,
+    numDepartures: 3,
   },
 
   getStyles() {
@@ -31,9 +32,10 @@ Module.register("MMM-PublicTransit", {
       { route_short_name: "Error", departure_time: Date.now()/1000 + 600 }
     ];
   
-    this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours()})
+    let startTime = Math.floor(Date.now() / 1000) + this.config.delayMinutes * 60;
+    this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours(),time:startTime,numDepartures:this.config.numDepartures})
     //setInterval(() => this.sendSocketNotification("FETCH_BUS_SCHEDULE", payload), this.config.updateFrequency * 60 * 1000);
-    setInterval(() => this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours()}), this.config.updateFrequency * 60 * 1000);
+    setInterval(() => this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours(),time:startTime,numDepartures:this.config.numDepartures}), this.config.updateFrequency * 60 * 1000);
     setInterval(() => this.updateDom(), 30000)
   },
 
