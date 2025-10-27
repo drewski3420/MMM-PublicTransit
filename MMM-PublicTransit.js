@@ -30,7 +30,6 @@ Module.register("MMM-PublicTransit", {
       { route_short_name: "API", departure_time: Date.now()/1000 + 360 },
       { route_short_name: "Error", departure_time: Date.now()/1000 + 600 }
     ];
-
     this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours()})
     //setInterval(() => this.sendSocketNotification("FETCH_BUS_SCHEDULE", payload), this.config.updateFrequency * 60 * 1000);
     setInterval(() => this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours()}), this.config.updateFrequency * 60 * 1000);
