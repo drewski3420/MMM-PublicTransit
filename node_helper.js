@@ -14,11 +14,13 @@ module.exports = NodeHelper.create({
       try {
         // Build the URL with query parameters
         const baseUrl = 'https://external.transitapp.com/v3/public/stop_departures';
+
         const url = new URL(baseUrl);
         url.searchParams.append('global_stop_id', payload.global_stop_id);
         url.searchParams.append('remove_cancelled', 'true');
         url.searchParams.append('time', payload.time);
-        
+        url.searchParams.append('max_num_departures',payload.max_num_departures);
+
         // Make the API request
         //console.log("Making API call to Transit App...");
         const response = await fetch(url, {
