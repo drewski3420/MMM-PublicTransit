@@ -4,7 +4,7 @@ const { URL } = require("url"); // Ensure URL is available
 
 module.exports = NodeHelper.create({
   async socketNotificationReceived(notification, payload) {
-    
+    console.log('whaaaaaaaaaaaaaaaaaaaaat');
     if (!payload.activeHours) {
       //console.log("Outside active hours, skipping API Calls.");
       return; // Exit if activeHours is not defined
@@ -19,8 +19,8 @@ module.exports = NodeHelper.create({
         url.searchParams.append('global_stop_id', payload.global_stop_id);
         url.searchParams.append('remove_cancelled', 'true');
         url.searchParams.append('time', payload.startTime);
-        url.searchParams.append('max_num_departures',payload.numDepartures);
 
+        console.log(payload.startTime);
         // Make the API request
         //console.log("Making API call to Transit App...");
         const response = await fetch(url, {
@@ -40,16 +40,18 @@ module.exports = NodeHelper.create({
         const data = await response.json();
         const routeDepartures = data.route_departures;
         const result = [];
-      
+        console.log(routeDepartures);
         if (routeDepartures && Array.isArray(routeDepartures)) {
           routeDepartures.forEach(route => {
             if (route.itineraries && Array.isArray(route.itineraries)) {
               route.itineraries.forEach(itinerary => {
+                console.log('direction_headsign',itenerary.direction_headsign);
                 if (itinerary.schedule_items && Array.isArray(itinerary.schedule_items)) {
                   itinerary.schedule_items.forEach(scheduleItem => {
                     result.push({
                       route_short_name: route.route_short_name,
                       departure_time: scheduleItem.departure_time,
+                      direction: itinerary.direction_headsign,
                     });
                   });
                 }
