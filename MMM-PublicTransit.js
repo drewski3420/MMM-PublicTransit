@@ -13,7 +13,7 @@ Module.register("MMM-PublicTransit", {
     activeDays: [0, 1, 2, 3, 4, 5, 6], // Active days of the week (0 = Sunday, 6 = Saturday)
     updateFrequency: 30, // Update frequency in minutes
     delayMinutes: 0,
-    direction: "",
+    numDepartures: 3,
   },
 
   getStyles() {
@@ -27,17 +27,15 @@ Module.register("MMM-PublicTransit", {
     
     // some dummy values
     this.busSchedule = [
-      { route_short_name: "UhOh", departure_time: Date.now()/1000 - 60, direction: 'Outbound' },
-      { route_short_name: "API", departure_time: Date.now()/1000 + 360, direction: 'Inbound' },
-      { route_short_name: "Error", departure_time: Date.now()/1000 + 600, direction: 'Downtown' }
+      { route_short_name: "UhOh", departure_time: Date.now()/1000 - 60 },
+      { route_short_name: "API", departure_time: Date.now()/1000 + 360 },
+      { route_short_name: "Error", departure_time: Date.now()/1000 + 600 }
     ];
   
     let startTime = Math.floor(Date.now() / 1000) + this.config.delayMinutes * 60;
-    console.log(this.config.direction);
-    console.log(startTime);
-    this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours(),startTime:startTime})
+    this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours(),time:startTime,numDepartures:this.config.numDepartures})
     //setInterval(() => this.sendSocketNotification("FETCH_BUS_SCHEDULE", payload), this.config.updateFrequency * 60 * 1000);
-    setInterval(() => this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours(),startTime:startTime}), this.config.updateFrequency * 60 * 1000);
+    setInterval(() => this.sendSocketNotification("FETCH_BUS_SCHEDULE", {apiKey:this.config.apiKey,global_stop_id:this.config.global_stop_id,activeHours:this.activeHours(),time:startTime,numDepartures:this.config.numDepartures}), this.config.updateFrequency * 60 * 1000);
     setInterval(() => this.updateDom(), 30000)
   },
 
@@ -63,8 +61,7 @@ Module.register("MMM-PublicTransit", {
   },
 
   getDom() {
-//    console.log(this.busSchedule); 
-  // Create the main container div
+    // Create the main container div
     const container = document.createElement('div');
     container.classList.add('container');
 
@@ -114,12 +111,6 @@ Module.register("MMM-PublicTransit", {
     while (i < this.busSchedule.length && j < this.config.displayed_entries) {
 
       if (Math.round((this.busSchedule[i].departure_time - Date.now()/1000) / 60) < 2) {
-        i++;
-        continue;
-      }
-
-      //skip if we've set a direction (inbound/outbound) and it doesn't match)
-      if (this.config.direction && this.busSchedule[i].direction.toLowerCase() != this.config.direction.toLowerCase()) {
         i++;
         continue;
       }
